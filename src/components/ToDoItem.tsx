@@ -1,10 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-
-export interface ToDoItemProps {
-  text: string;
-  id: string;
-  onDelete: (id: string) => void;
-}
+import { ToDoItemProps } from '../types/ToDo.interface';
 
 export default function ToDoItem({ text, id, onDelete }: ToDoItemProps) {
   return (

@@ -7,12 +7,7 @@ import {
   Modal,
   Image,
 } from 'react-native';
-
-export interface ToDoInputProps {
-  visible: boolean;
-  onAddToDo: (enteredText: string) => void;
-  onCancel: () => void;
-}
+import { ToDoInputProps } from '../types/ToDo.interface';
 
 export default function ToDoInput({
   visible,

@@ -4,11 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import ToDoItem from '../components/ToDoItem';
 import ToDoInput from '../components/ToDoInput';
-
-export interface ToDo {
-  id: string;
-  text: string;
-}
+import { ToDo } from '../types/ToDo.interface';
 
 export default function HomeScreen() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
