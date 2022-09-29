@@ -1,11 +1,85 @@
-import { View, Text } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
-function HomeScreen() {
+import ToDoItem from '../components/ToDoItem';
+import ToDoInput from '../components/ToDoInput';
+
+export interface ToDo {
+  id: string;
+  text: string;
+}
+
+export default function HomeScreen() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [toDos, setToDos] = useState<ToDo[]>([]);
+
+  const startAddToDoHandler = () => {
+    setModalIsVisible(true);
+  };
+
+  const endAddToDoHandler = () => {
+    setModalIsVisible(false);
+  };
+
+  const addToDoHandler = (enteredGoalText: string) => {
+    setToDos((currentToDos) => [
+      ...currentToDos,
+      { text: enteredGoalText, id: Math.random().toString() },
+    ]);
+    endAddToDoHandler();
+  };
+
+  const deleteToDoHandler = (id: string) => {
+    setToDos((currentToDos) => {
+      return currentToDos.filter((todo) => todo.id !== id);
+    });
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add New Goal"
+          color="#a065ec"
+          onPress={startAddToDoHandler}
+        />
+        <ToDoInput
+          visible={modalIsVisible}
+          onAddToDo={addToDoHandler}
+          onCancel={endAddToDoHandler}
+        />
+        <View style={styles.toDosContainer}>
+          <FlatList
+            data={toDos}
+            renderItem={(itemData) => {
+              return (
+                <ToDoItem
+                  text={itemData.item.text}
+                  id={itemData.item.id}
+                  onDelete={deleteToDoHandler}
+                />
+              );
+            }}
+            keyExtractor={(item) => {
+              return item.id;
+            }}
+            alwaysBounceVertical={false}
+          />
+        </View>
+      </View>
+    </>
   );
 }
 
-export default HomeScreen;
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16,
+  },
+  toDosContainer: {
+    flex: 5,
+  },
+});
