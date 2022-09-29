@@ -18,10 +18,10 @@ export default function HomeScreen() {
     setModalIsVisible(false);
   };
 
-  const addToDoHandler = (enteredGoalText: string) => {
+  const addToDoHandler = (enteredToDoText: string) => {
     setToDos((currentToDos) => [
       ...currentToDos,
-      { text: enteredGoalText, id: Math.random().toString() },
+      { text: enteredToDoText, id: Math.random().toString() },
     ]);
     endAddToDoHandler();
   };
@@ -37,7 +37,7 @@ export default function HomeScreen() {
       <StatusBar style="light" />
       <View style={styles.appContainer}>
         <Button
-          title="Add New Goal"
+          title="Add New ToDo"
           color="#a065ec"
           onPress={startAddToDoHandler}
         />
